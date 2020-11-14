@@ -20,11 +20,15 @@ Upon opening the web application, users should be able to see a list of movies s
 <br>
 Pagination is not required for this version.
 
-- API reference: https://developers.themoviedb.org/3/discover/movie-discover ### Search
+- API reference: https://developers.themoviedb.org/3/discover/movie-discover
+
+### Search
   In the discovery view, add a search bar at the top to allow users to query information about movies.
   <br>
   If the search field is empty, show the discovery results
-- API reference: https://developers.themoviedb.org/3/search/search-movies ### Filter by rating
+- API reference: https://developers.themoviedb.org/3/search/search-movies
+
+### Filter by rating
   The rating is a value between 0 and 10.
   <br>
   Add a rating filter in the form of five stars like [here](https://dribbble.com/shots/1053518-Filters).

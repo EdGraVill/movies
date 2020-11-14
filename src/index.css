@@ -11,3 +11,14 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+@keyframes jumbo_image {
+  0% {
+    bottom: 0;
+    left: 0;
+  }
+  100% {
+    bottom: 100vh;
+    left: -20vw;
+  }
+}
