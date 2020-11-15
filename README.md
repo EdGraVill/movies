@@ -1,3 +1,5 @@
+## [CLICK HERE TO OPEN LIVE PREVIEW](https://edgravill.github.io/movies/)
+
 # React Coding Challenge
 
 The goal of this coding challenge is to give you an opportunity to showcase your knowledge and show us how you work on a real-life project.
