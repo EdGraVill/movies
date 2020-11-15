@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { movieListSelector, moviesActions, searchMovie, searchTextSelector } from './Movies';
+import { movieListSelector, moviesActions, searchListSelector, searchTextSelector } from './Movies';
 import { Content, Grid, Jumbo } from './UI';
 import useTrending from './useTrending';
 
@@ -8,25 +8,12 @@ function App() {
   const dispatch = useDispatch();
   const movieList = useSelector(movieListSelector);
   const searchText = useSelector(searchTextSelector);
-  const [searchList, setSearchList] = React.useState<MovieDB.Objects.Movie[]>([]);
-  const [trendingList, fetchTrendingList] = useTrending();
-
-  console.log({ trendingList });
+  const searchList = useSelector(searchListSelector);
+  const [trendingList] = useTrending();
 
   React.useEffect(() => {
     if (!searchText) {
       dispatch(moviesActions.fetchDiscovery({ sort_by: 'popularity.desc' }));
-    }
-  }, [searchText]);
-
-  React.useEffect(() => {
-    if (searchText) {
-      console.log({ searchText });
-      searchMovie({ query: searchText, include_adult: false }).then(({ data }) => {
-        setSearchList(data.results);
-      });
-    } else {
-      setSearchList([]);
     }
   }, [searchText]);
 

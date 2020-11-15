@@ -1,11 +1,17 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { mergeToLeft, getSearchText } from '../util';
 
+export interface SearchFilters {
+  vote?: number | null;
+}
+
 export const getMoviesIntialState = () => ({
   isFetching: false,
   lastError: null as string | null,
   genreMap: {} as { [genreId: number]: string },
   movieList: [] as MovieDB.Objects.Movie[],
+  searchList: [] as MovieDB.Objects.Movie[],
+  searchFilters: {} as SearchFilters,
   searchText: getSearchText(),
 });
 
@@ -40,9 +46,22 @@ export const { actions: moviesActions, name: moviesReducerName, reducer: moviesR
     },
     setSearchText(state, { payload }: PayloadAction<string>) {
       state.searchText = payload;
+
+      if (!payload) {
+        state.searchList = [];
+        state.searchFilters = {};
+      }
     },
     clearSearchText(state) {
       state.searchText = '';
+      state.searchList = [];
+      state.searchFilters = {};
+    },
+    fulfillSearchList(state, { payload }: PayloadAction<MovieDB.Objects.Movie[]>) {
+      state.searchList = payload;
+    },
+    setSearchFilters(state, { payload }: PayloadAction<SearchFilters | undefined>) {
+      state.searchFilters = payload || {};
     },
   },
 });

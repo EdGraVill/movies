@@ -81,3 +81,13 @@ export const getSearchText = (): string => {
 
   return '';
 };
+
+export const useSwitch = (initialState = true): [value: boolean, switcher: () => void] => {
+  const [value, setValue] = React.useState(initialState);
+
+  const switcher = () => {
+    setValue(!value);
+  };
+
+  return [value, switcher];
+};

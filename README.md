@@ -40,7 +40,9 @@ The range of each star is 2, so, if the first star is selected, only movies with
 If the star clicked is the currently active, disable the filter. <br>
 Do this filtering on the client side.
 
-- Rating field in the movie model: `vote_average` ### Detail view
+- Rating field in the movie model: `vote_average`
+
+### Detail view
   Upon clicking, a detail view must be shown, displaying more information about the movie.
 
 ## Design
