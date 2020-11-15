@@ -25,3 +25,10 @@ export const discover = async (args?: MovieDB.Arguments.Discover.Movie['query'])
   });
 
 export const getGenreList = async () => agent.get<MovieDB.Responses.Genre.Common>('/genre/movie/list');
+
+export const searchMovie = async (args?: MovieDB.Arguments.Search.Movies['query']) =>
+  agent.get<MovieDB.Responses.Search.Movies>('/search/movie', {
+    params: args || {},
+  });
+
+export const getTrending = async () => agent.get<MovieDB.Responses.Trending.GetTrending>('/trending/movie/day');

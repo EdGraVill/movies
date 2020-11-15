@@ -1,5 +1,7 @@
 /// <reference types="react-scripts" />
 
+declare module 'react-text-transition';
+
 declare namespace MovieDB {
   namespace Objects {
     interface Movie {

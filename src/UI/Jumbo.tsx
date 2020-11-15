@@ -9,6 +9,14 @@ const useStyles = makeStyles({
   container: {
     height: 500,
     position: 'relative',
+    transition: 'all 0.3s cubic-bezier(.25, .8, .25, 1)',
+  },
+  containerInSearch: {
+    height: 200,
+    '& .brand': {
+      marginBottom: '-200px',
+      opacity: 0,
+    },
   },
   backgorund: {
     backgroundColor: 'black',
@@ -20,16 +28,18 @@ const useStyles = makeStyles({
     top: 0,
   },
   imagesContainer: {
-    height: '100%',
-    overflow: 'hidden',
+    height: 500,
+    transform: 'rotate(30deg)',
     width: '200vw',
   },
   image: {
     animation: 'jumbo_image 20s infinite',
     animationDirection: 'alternate',
     animationTimingFunction: 'linear',
+    backfaceVisibility: 'hidden',
     height: 150,
     objectFit: 'contain',
+    perspective: 1000,
     position: 'relative',
     width: 100,
   },
@@ -44,12 +54,20 @@ const useStyles = makeStyles({
     position: 'relative',
     width: '100%',
   },
+  brand: {
+    alignItems: 'center',
+    display: 'flex',
+    flexFlow: 'column nowrap',
+    justifyContent: 'center',
+    transition: 'all 0.3s cubic-bezier(.25, .8, .25, 1)',
+  },
   title: {
     color: 'white',
     fontFamily: '',
     fontSize: '3rem',
   },
   logo: {
+    margin: '0 auto',
     width: 100,
   },
 });
@@ -68,38 +86,59 @@ const getRandomPosters = async (callback: (list: string[]) => void, nPages = 20)
   callback(images);
 };
 
+interface ImageSet {
+  animationDuration: string;
+  opacity: number;
+  url: string;
+  x: number;
+  y: number;
+}
+
 const Jumbo: React.FC = () => {
-  const [posterUrlList, setPosterUrlList] = React.useState<string[]>([]);
+  const [posterUrlList, setPosterUrlList] = React.useState<ImageSet[]>([]);
   const classes = useStyles();
 
   React.useEffect(() => {
-    getRandomPosters(setPosterUrlList);
+    if (!posterUrlList.length) {
+      getRandomPosters((list) =>
+        setPosterUrlList(
+          list.map(
+            (url): ImageSet => ({
+              animationDuration: `${randomBetween(20, 30)}s`,
+              opacity: Math.random(),
+              url,
+              x: randomBetween(-5, 5),
+              y: randomBetween(-5, 5),
+            }),
+          ),
+        ),
+      );
+    }
   }, []);
 
   return (
     <Paper className={classes.container} elevation={5}>
       <div className={classes.backgorund}>
         <div className={classes.imagesContainer}>
-          {posterUrlList.map((url, ix) => (
+          {posterUrlList.map(({ animationDuration, opacity, url, x, y }, ix) => (
             <img
               className={classes.image}
               key={ix}
               src={url}
               style={{
-                animationDuration: `${randomBetween(100, 300)}s`,
-                opacity: Math.random(),
-                transform: `
-                  rotate(${randomBetween(28, 32)}deg)
-                  translateX(${randomBetween(-5, 5)}em)
-                  translateY(${randomBetween(-5, 5)}em)`,
+                animationDuration,
+                opacity,
+                transform: `translateX(${x}em) translateY(${y}em)`,
               }}
             />
           ))}
         </div>
       </div>
       <div className={classes.content}>
-        <img alt="CINEMARS LOGO" className={classes.logo} src={logo} />
-        <h1 className={classes.title}>CINEMARS</h1>
+        <div className={`brand ${classes.brand}`}>
+          <img alt="CINEMARS LOGO" className={classes.logo} src={logo} />
+          <h1 className={classes.title}>CINEMARS</h1>
+        </div>
         <Search />
       </div>
     </Paper>

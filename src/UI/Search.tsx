@@ -1,5 +1,8 @@
 import { makeStyles } from '@material-ui/core';
 import * as React from 'react';
+import { useDispatch } from 'react-redux';
+import { moviesActions } from '../Movies';
+import { getSearchText, useDebounce } from '../util';
 
 const useStyles = makeStyles({
   search: {
@@ -14,18 +17,23 @@ const useStyles = makeStyles({
     '&:focus': {
       outline: 'none',
     },
+    zIndex: 2,
   },
 });
 
 const Search: React.FC = () => {
+  const dispatch = useDispatch();
   const classes = useStyles();
-  const [text, setText] = React.useState('');
+  const [text, setText] = React.useState(getSearchText());
+  const debouncedText = useDebounce(text, 500);
 
   React.useEffect(() => {
-    if (text) {
-      history.replaceState('', document.title, `${location.pathname}?search=${text}`);
-    } else {
-      history.replaceState('', document.title, `${location.pathname}`);
+    dispatch(moviesActions.setSearchText(debouncedText));
+  }, [debouncedText]);
+
+  React.useEffect(() => {
+    if (!text) {
+      dispatch(moviesActions.clearSearchText());
     }
   }, [text]);
 

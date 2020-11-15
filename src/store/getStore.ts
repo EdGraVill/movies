@@ -1,6 +1,6 @@
 import { combineReducers, configureStore, getDefaultMiddleware, StateFromReducersMapObject } from '@reduxjs/toolkit';
 import createSagaMiddleware from 'redux-saga';
-import { moviesReducer, moviesReducerName } from '../Movies';
+import { moviesReducer, moviesReducerName, moviesSagas } from '../Movies';
 import { isProdEnv } from '../util';
 
 export const reducersMapObject = {
@@ -17,6 +17,8 @@ export const getStore = () => {
     devTools: !isProdEnv,
     middleware: [...getDefaultMiddleware(), sagasMiddleware],
   });
+
+  sagasMiddleware.run(moviesSagas);
 
   return store;
 };

@@ -8,3 +8,7 @@ export const genreMapLengthSelector = createSelector(
   moviesRootStateSelector,
   ({ genreMap }) => Object.values(genreMap).length,
 );
+
+export const searchTextSelector = createSelector(moviesRootStateSelector, ({ searchText }) => searchText);
+
+export const movieListSelector = createSelector(moviesRootStateSelector, ({ movieList }) => movieList);

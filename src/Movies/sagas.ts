@@ -2,7 +2,7 @@ import { AxiosResponse } from 'axios';
 import { call, put, select, takeEvery } from 'redux-saga/effects';
 import { ThenArg } from '../types';
 import { discover, getGenreList } from './api';
-import { genreMapLengthSelector } from './selectors';
+import { genreMapLengthSelector, searchTextSelector } from './selectors';
 import { moviesActions } from './slicer';
 
 export function* fetchDiscoveryEffect({ payload }: ReturnType<typeof moviesActions['fetchDiscovery']>) {
@@ -23,6 +23,17 @@ export function* fetchDiscoveryEffect({ payload }: ReturnType<typeof moviesActio
   }
 }
 
+export function* setSearchTextEffect() {
+  const newText: string = yield select(searchTextSelector);
+
+  if (!newText) {
+    history.replaceState('', document.title, `${location.pathname}`);
+  } else {
+    history.replaceState('', document.title, `${location.pathname}?search=${newText}`);
+  }
+}
+
 export function* moviesSagas() {
   yield takeEvery(moviesActions.fetchDiscovery, fetchDiscoveryEffect);
+  yield takeEvery([moviesActions.setSearchText, moviesActions.clearSearchText], setSearchTextEffect);
 }

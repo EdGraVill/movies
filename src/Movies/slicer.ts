@@ -1,11 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { mergeToLeft } from '../util';
+import { mergeToLeft, getSearchText } from '../util';
 
 export const getMoviesIntialState = () => ({
   isFetching: false,
   lastError: null as string | null,
   genreMap: {} as { [genreId: number]: string },
   movieList: [] as MovieDB.Objects.Movie[],
+  searchText: getSearchText(),
 });
 
 export type MoviesState = ReturnType<typeof getMoviesIntialState>;
@@ -36,6 +37,12 @@ export const { actions: moviesActions, name: moviesReducerName, reducer: moviesR
     },
     clearError(state) {
       state.lastError = null;
+    },
+    setSearchText(state, { payload }: PayloadAction<string>) {
+      state.searchText = payload;
+    },
+    clearSearchText(state) {
+      state.searchText = '';
     },
   },
 });

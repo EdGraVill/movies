@@ -1,3 +1,5 @@
+import * as React from 'react';
+
 export const isProdEnv = process.env.NODE_ENV === 'production';
 
 export const mergeToLeft = <T>(left: T[], right: T[], uniqueId: keyof T): T[] => {
@@ -39,4 +41,43 @@ export const randomBetween = (min: number, max: number, ignore?: number | number
   }
 
   throw new Error(`Invalid operation:\n\n${JSON.stringify({ min, max, ignore }, undefined, 2)}`);
+};
+
+export const useDebounce = (text: string, time = 1000): string => {
+  const [debouncedText, setDebouncedText] = React.useState(text);
+
+  React.useEffect(() => {
+    const newText = text;
+
+    const timeout = setTimeout(() => {
+      setDebouncedText(newText);
+    }, time);
+
+    return () => {
+      clearTimeout(timeout);
+    };
+  }, [text, time]);
+
+  return debouncedText;
+};
+
+export const getSearchText = (): string => {
+  const queries: { [query: string]: string } = location.search
+    ? location.search
+        .replace('?', '')
+        .split('&')
+        .reduce(
+          (prev, curr) => ({
+            ...prev,
+            [curr.split('=')[0]]: decodeURI(curr.split('=')[1]),
+          }),
+          {},
+        )
+    : {};
+
+  if (queries.search) {
+    return queries.search;
+  }
+
+  return '';
 };
