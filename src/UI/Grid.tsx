@@ -1,5 +1,6 @@
-import { makeStyles, Paper } from '@material-ui/core';
+import { makeStyles, Modal, Paper } from '@material-ui/core';
 import * as React from 'react';
+import Details from './Details';
 import Movie from './Movie';
 import SectionTitle from './SectionTitle';
 
@@ -12,7 +13,13 @@ const useStyles = makeStyles({
     marginBottom: '5rem',
     overflow: 'hidden',
     rowGap: `repeat(${props.rows}, 2rem)`,
+    transition: 'all 0.3s cubic-bezier(.25, .8, .25, 1)',
   }),
+  modal: {
+    alignItems: 'center',
+    display: 'flex',
+    justifyContent: 'center',
+  },
 });
 
 interface Props {
@@ -24,6 +31,18 @@ interface Props {
 
 const Grid: React.FC<Props> = ({ highlightFirst = false, movieList, title, rows = 2 }) => {
   const classes = useStyles({ highlightFirst, rows });
+  const [isModalOpen, setModal] = React.useState(false);
+  const [selectedMovie, setMovie] = React.useState<MovieDB.Objects.Movie | null>(null);
+
+  const onClose = React.useCallback(() => {
+    setModal(false);
+    setMovie(null);
+  }, []);
+
+  const onMovieSelect = React.useCallback((movie: MovieDB.Objects.Movie) => {
+    setModal(true);
+    setMovie(movie);
+  }, []);
 
   return (
     <>
@@ -32,9 +51,18 @@ const Grid: React.FC<Props> = ({ highlightFirst = false, movieList, title, rows 
         {movieList
           .filter((_, ix) => ix < rows * 4 - (highlightFirst ? 1 : 0))
           .map((movie, ix) => (
-            <Movie highlightFirst={highlightFirst} key={movie.id} movie={movie} positionIx={ix} />
+            <Movie
+              highlightFirst={highlightFirst}
+              key={movie.id}
+              movie={movie}
+              onClick={onMovieSelect}
+              positionIx={ix}
+            />
           ))}
       </Paper>
+      <Modal className={classes.modal} open={isModalOpen} onClose={onClose}>
+        {selectedMovie ? <Details movie={selectedMovie!} /> : <></>}
+      </Modal>
     </>
   );
 };

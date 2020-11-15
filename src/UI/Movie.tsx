@@ -34,16 +34,17 @@ const useStyles = makeStyles({
 interface Props {
   highlightFirst: boolean;
   movie: MovieDB.Objects.Movie;
+  onClick?(movie: MovieDB.Objects.Movie): void;
   positionIx: number;
 }
 
-const Movie: React.FC<Props> = ({ highlightFirst, movie, positionIx }) => {
+const Movie: React.FC<Props> = ({ highlightFirst, movie, onClick, positionIx }) => {
   const classes = useStyles({ highlightFirst, positionIx });
   const filters = useSelector(searchFiltersSelector);
 
   return (
     <Card className={classes.root}>
-      <CardActionArea className={classes.area}>
+      <CardActionArea className={classes.area} onClick={() => (onClick ? onClick(movie) : null)}>
         <CardMedia className={classes.media} image={getImageURL(movie.backdrop_path!)} />
         <CardContent>
           {typeof filters.vote === 'number' && <Rating readOnly size="small" value={filters.vote} />}

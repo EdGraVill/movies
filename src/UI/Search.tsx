@@ -20,7 +20,7 @@ const useStyles = makeStyles({
     borderRadius: '.5rem',
     fontSize: '1.1rem',
     marginTop: '3rem',
-    padding: '.8rem 2.5rem .8rem 1rem',
+    padding: '.8rem 2.5rem',
     textAlign: 'center',
     width: 400,
     zIndex: 2,
