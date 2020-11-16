@@ -4,7 +4,7 @@ import Details from './Details';
 import Movie from './Movie';
 import SectionTitle from './SectionTitle';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   container: (props: { highlightFirst: boolean; rows: number }) => ({
     display: 'grid',
     columnGap: '1rem',
@@ -12,15 +12,20 @@ const useStyles = makeStyles({
     gridTemplateRows: `repeat(${props.rows}, 300px)`,
     marginBottom: '5rem',
     overflow: 'hidden',
-    rowGap: `repeat(${props.rows}, 2rem)`,
+    paddingBottom: 2,
+    rowGap: `2rem`,
     transition: 'all 0.3s cubic-bezier(.25, .8, .25, 1)',
+    [theme.breakpoints.down('md')]: {
+      gridTemplateColumns: 'repeat(2, 1fr)',
+      gridTemplateRows: `repeat(${(props.rows * 4) / 2}, 300px)`,
+    },
   }),
   modal: {
     alignItems: 'center',
     display: 'flex',
     justifyContent: 'center',
   },
-});
+}));
 
 interface Props {
   highlightFirst?: boolean;

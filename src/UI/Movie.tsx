@@ -4,7 +4,7 @@ import * as React from 'react';
 import { useSelector } from 'react-redux';
 import { getImageURL, searchFiltersSelector } from '../Movies';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   root: (props: { highlightFirst: boolean; positionIx: number }) => ({
     display: 'flex',
     flexFlow: 'column nowrap',
@@ -15,6 +15,16 @@ const useStyles = makeStyles({
             overflow: 'initial',
           }
         : {},
+    [theme.breakpoints.down('md')]: {
+      gridColumn: props.highlightFirst && props.positionIx === 0 ? '1/3' : 'initial',
+      gridRow: 'initial',
+      '& p':
+        props.highlightFirst && props.positionIx === 0
+          ? {
+              overflow: 'hidden',
+            }
+          : {},
+    },
   }),
   media: {
     height: 120,
@@ -29,7 +39,7 @@ const useStyles = makeStyles({
     flexDirection: 'column',
     alignItems: 'stretch',
   },
-});
+}));
 
 interface Props {
   highlightFirst: boolean;

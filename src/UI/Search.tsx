@@ -7,28 +7,34 @@ import { moviesActions } from '../Movies';
 import { getSearchText, useDebounce, useSwitch } from '../util';
 import { Rating } from '@material-ui/lab';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   container: {
     alignItems: 'center',
     display: 'flex',
     flexFlow: 'column nowrap',
+    maxWidth: 500,
     position: 'relative',
+    width: '90%',
   },
   search: {
     backgroundColor: 'rgba(255, 255, 255, .85)',
     border: 0,
     borderRadius: '.5rem',
+    boxSizing: 'border-box',
     fontSize: '1.1rem',
     marginTop: '3rem',
     padding: '.8rem 2.5rem',
     textAlign: 'center',
-    width: 400,
+    width: '100%',
     zIndex: 2,
     '&:focus': {
       outline: 'none',
     },
     '&:not(:placeholder-shown) + div': {
       opacity: 1,
+    },
+    [theme.breakpoints.down('sm')]: {
+      fontSize: '1rem',
     },
   },
   filter: {
@@ -49,7 +55,7 @@ const useStyles = makeStyles({
     },
     zIndex: 3,
   },
-});
+}));
 
 const Search: React.FC = () => {
   const dispatch = useDispatch();

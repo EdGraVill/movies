@@ -5,11 +5,14 @@ import { randomBetween } from '../util';
 import logo from '../assets/logo.svg';
 import Search from './Search';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   container: {
     height: 500,
     position: 'relative',
     transition: 'all 0.3s cubic-bezier(.25, .8, .25, 1)',
+    [theme.breakpoints.down('sm')]: {
+      height: '80vh',
+    },
   },
   containerInSearch: {
     height: 200,
@@ -70,7 +73,7 @@ const useStyles = makeStyles({
     margin: '0 auto',
     width: 100,
   },
-});
+}));
 
 const getRandomPosters = async (callback: (list: string[]) => void, nPages = 20) => {
   const pages = new Array(nPages).fill(0).map((_, ix, arr) => randomBetween(1, 50, arr));
