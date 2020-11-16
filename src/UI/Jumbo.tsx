@@ -11,7 +11,7 @@ const useStyles = makeStyles((theme) => ({
     position: 'relative',
     transition: 'all 0.3s cubic-bezier(.25, .8, .25, 1)',
     [theme.breakpoints.down('sm')]: {
-      height: '80vh',
+      height: '55vh',
     },
   },
   containerInSearch: {

@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: '.5rem',
     boxSizing: 'border-box',
     fontSize: '1.1rem',
-    marginTop: '3rem',
+    marginTop: '1rem',
     padding: '.8rem 2.5rem',
     textAlign: 'center',
     width: '100%',
@@ -49,7 +49,7 @@ const useStyles = makeStyles((theme) => ({
     cursor: 'pointer',
     position: 'absolute',
     right: '.5rem',
-    top: '3.6rem',
+    top: '1.6rem',
     '&:focus': {
       outline: 'none',
     },
